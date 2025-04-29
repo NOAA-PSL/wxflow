@@ -10,6 +10,7 @@ from .file_utils import FileHandler
 from .fsutils import chdir, chgrp, cp, get_gid, mkdir, mkdir_p, rm_p, rmdir
 from .hsi import Hsi
 from .htar import Htar
+from .aws import Aws
 from .jinja import Jinja
 from .logger import Logger, logit
 from .sqlitedb import SQLiteDB, SQLiteDBError
