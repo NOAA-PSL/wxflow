@@ -388,30 +388,6 @@ class Aws:
         # can't use pathlib here, as the s3 link will not resolve correctly as a path, and python will jam the current working dir onto the front of the path
         parent_target = target.rpartition("/")[0] + target.rpartition("/")[1]
 
-
-        """
-        OPTION 1: separate s3 command for each file
-        NOTE:  This is pretty slow; unless AWS makes significant changes that break the functionality of the other two options,
-                we do not recommend this option.
-        ============================================
-        for file_or_glob in Aws._split_opts(fileset):
-            glob_set = glob.glob(file_or_glob)
-            for filename in glob_set:
-                if os.stat(filename).st_gid == rstprod_gid:
-                    logger.warning(f"WARNING: skipping rst_prod file {filename} as it cannot have protected access on AWS.")
-                else:
-                    targetpath = parent_target + filename
-                    output += self.put(filename, targetpath, opts)
-                    output += "\n"
-                    #logger.info(f"INFO: file_or_glob: {file_or_glob}")
-                    #logger.info(f"INFO: glob: {filename}")
-        """
-        
-        """
-        OPTION 2: stage files locally, then recursively copy whole directory
-        NOTE:  This appears to be pretty fast.
-        ============================================
-        """
         filelist = []
         rotdir = os.environ.get("ROTDIR")    # normally we'd pull this from the arch_dict, but it doesn't exist at this scope
         temp_target = os.path.join(rotdir, "tmp_archive")
@@ -437,14 +413,6 @@ class Aws:
 
         rmdir(temp_target)
         
-
-        """
-        OPTION 3: recursively copy whole ROTDIR, but exclude *, then include each file that is needed
-        NOTE:  s3 seems to not like the use of relative paths in the "--include" flag, so need to figure out how to do this
-        ============================================
-        """
-
-
         return output
 
         
