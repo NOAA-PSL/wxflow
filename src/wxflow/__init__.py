@@ -13,7 +13,7 @@ from .hsi import Hsi
 from .htar import Htar
 from .aws import Aws
 from .jinja import Jinja
-from .logger import Logger, logit
+from .logger import Logger, add_file_logger, add_stream_logger, logit
 from .scheduler.no_scheduler import NoScheduler
 from .scheduler.pbs import PBS
 from .scheduler.scheduler import Scheduler
