@@ -387,10 +387,13 @@ class Aws:
 
         # can't use pathlib here, as the s3 link will not resolve correctly as a path, and python will jam the current working dir onto the front of the path
         parent_target = target.rpartition("/")[0] + target.rpartition("/")[1]
+        target_tarname = target.rpartition("/")[2]
+        target_name = target_tarname.replace(".", "")
+        target_name_archive = "tmp_archive_" + target_name
 
         filelist = []
         rotdir = os.environ.get("ROTDIR")    # normally we'd pull this from the arch_dict, but it doesn't exist at this scope
-        temp_target = os.path.join(rotdir, "tmp_archive")
+        temp_target = os.path.join(rotdir, target_name_archive)
         temp_target += "/"
         if not os.path.isdir(temp_target):
             mkdir_p(temp_target)
